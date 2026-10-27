@@ -1,18 +1,17 @@
+from typing import List
 ''' 1 Задача '''
 moscow = {201, 202, 203, 204}
 kazan = {203, 204, 205, 206}
 
-# что можно забрать в любом из двух городов
-print(moscow & kazan)
-
-# что есть только в Москве
-print(moscow - kazan)
-
-# что есть только в Казани
-print(kazan - moscow)
-
-# сколько разных товаров на обоих складах вместе
-print(len(moscow | kazan))
+def task_1(moscow: set, kazan: set) -> None:
+    # что можно забрать в любом из двух городов
+    print(moscow & kazan)
+    # что есть только в Москве
+    print(moscow - kazan)
+    # что есть только в Казани
+    print(kazan - moscow)
+    # сколько разных товаров на обоих складах вместе
+    print(len(moscow | kazan))
 
 
 ''' 2 Задача '''
@@ -28,21 +27,22 @@ queries = [
     "iphone",
 ]
 
-# сколько всего поисковых запросов в ленте
-print(len(queries))
+def task_2(queries: List[str]) -> None:
+    # сколько всего поисковых запросов в ленте
+    print(len(queries))
 
-# сколько раз ввели каждый запрос
-from collections import Counter
-print(Counter(queries))
+    # сколько раз ввели каждый запрос
+    from collections import Counter
+    print(Counter(queries))
 
-# какой запрос вводили чаще всего
-print(Counter(queries).most_common(1))
+    # какой запрос вводили чаще всего
+    print(Counter(queries).most_common(1))
 
-# какую долю всех поисков он занимает
-print(Counter(queries).most_common(1)[0][1] / len(queries))
+    # какую долю всех поисков он занимает
+    print(Counter(queries).most_common(1)[0][1] / len(queries))
 
-# какие запросы встретились один раз
-print([k for k, v in Counter(queries).items() if v == 1])
+    # какие запросы встретились один раз
+    print([k for k, v in Counter(queries).items() if v == 1])
 
 
 ''' 3 Задача '''
@@ -55,18 +55,19 @@ orders = [
     {"id": 6, "buyer": "gleb", "status": "returned", "amount": 2_100},
 ]
 
-# на какую сумму оформили возвраты
-print(sum(x["amount"] for x in orders if x["status"] == "returned"))
+def task_3(orders: List[map]) -> None:
+    # на какую сумму оформили возвраты
+    print(sum(x["amount"] for x in orders if x["status"] == "returned"))
 
-# кто хотя бы раз вернул заказ
-print({x["buyer"] for x in orders if x["status"] == "returned"})
+    # кто хотя бы раз вернул заказ
+    print({x["buyer"] for x in orders if x["status"] == "returned"})
 
-# сколько заказов доставлено покупателю
-cnt_delivered = len([x for x in orders if x["status"] == "delivered"])
-print(cnt_delivered)
+    # сколько заказов доставлено покупателю
+    cnt_delivered = len([x for x in orders if x["status"] == "delivered"])
+    print(cnt_delivered)
 
-# средний чек доставленных заказов
-print(sum(x["amount"] for x in orders if x["status"] == "delivered") / cnt_delivered)
+    # средний чек доставленных заказов
+    print(sum(x["amount"] for x in orders if x["status"] == "delivered") / cnt_delivered)
 
 
 ''' 4 Задача '''
@@ -78,25 +79,27 @@ days = [
     {"day": "пт", "orders": 30, "revenue": 48_000, "returns": 3},
 ]
 
-# выручку за всю неделю
-revenues = [x["revenue"] for x in days]
-print(sum(revenues))
+def task_4(days: List[map]) -> None:
+    # выручку за всю неделю
+    revenues = [x["revenue"] for x in days]
+    print(sum(revenues))
 
-# день с самой большой выручкой
-print([x["day"] for x in days if x["revenue"] == max(revenues)])
+    # день с самой большой выручкой
+    max_revenue = max(revenues)
+    print([x["day"] for x in days if x["revenue"] == max_revenue])
 
-# среднюю выручку на один заказ в каждый день
-res = {}
-for day in days:
-    res[day["day"]] = day["revenue"] / day["orders"] if day["orders"] > 0 else 0
-print(res)
+    # среднюю выручку на один заказ в каждый день
+    res = {}
+    for day in days:
+        res[day["day"]] = day["revenue"] / day["orders"] if day["orders"] > 0 else 0
+    print(res)
 
-# дни, где возвратов больше 20% заказов
-res = []
-for day in days:
-    if day["orders"] > 0 and day["returns"] / day["orders"] > 0.2:
-        res.append(day["day"])
-print(res)
+    # дни, где возвратов больше 20% заказов
+    res = []
+    for day in days:
+        if day["orders"] > 0 and day["returns"] / day["orders"] > 0.2:
+            res.append(day["day"])
+    print(res)
 
 
 ''' 5 Задача '''
@@ -113,29 +116,53 @@ reviews = [
     {"id": 5, "product": "Кабель", "stars": 1},
 ]
 
-# среднюю оценку каждого товара
-reviews.sort(key=lambda x: x["id"])
+def task_5(reviews: List[map]) -> None:
+    # среднюю оценку каждого товара
+    reviews.sort(key=lambda x: x["id"])
 
-from itertools import groupby
+    from itertools import groupby
 
-res = {}
-for k, g in groupby(reviews, key=lambda x: x["product"].lower()):
-    group = list(g)
-    res[k] = sum(x["stars"] for x in group) / len(group)
-print(res)
-
-# худший товар по средней оценке среди тех, у кого хотя бы два отзыва
-res = {}
-for k, g in groupby(reviews, key=lambda x: x["product"].lower()):
-    group = list(g)
-    if len(group) >= 2:
+    res = {}
+    for k, g in groupby(reviews, key=lambda x: x["product"].lower()):
+        group = list(g)
         res[k] = sum(x["stars"] for x in group) / len(group)
+    print(res)
 
-print(min(res.items(), key=lambda x: x[1])[0])
+    # худший товар по средней оценке среди тех, у кого хотя бы два отзыва
+    res = {}
+    for k, g in groupby(reviews, key=lambda x: x["product"].lower()):
+        group = list(g)
+        if len(group) >= 2:
+            res[k] = sum(x["stars"] for x in group) / len(group)
 
-# сколько отзывов на 1 или 2 звезды
-low_cnt = len([x for x in reviews if x["stars"] in [1, 2]])
-print(low_cnt)
+    print(min(res.items(), key=lambda x: x[1])[0])
 
-# какую долю всех отзывов они составляют
-print(low_cnt / len(reviews) if len(reviews) > 0 else 0)
+    # сколько отзывов на 1 или 2 звезды
+    low_cnt = len([x for x in reviews if x["stars"] in [1, 2]])
+    print(low_cnt)
+
+    # какую долю всех отзывов они составляют
+    print(low_cnt / len(reviews) if len(reviews) > 0 else 0)
+
+def main():
+    print("### Задача 1:")
+    task_1(moscow=moscow, kazan=kazan)
+    print()
+
+    print("### Задача 2:")
+    task_2(queries=queries)
+    print()
+
+    print("### Задача 3:")
+    task_3(orders=orders)
+    print()
+
+    print("### Задача 4:")
+    task_4(days=days)
+    print()
+
+    print("### Задача 5:")
+    task_5(reviews=reviews)
+
+if __name__ == "__main__":
+    main()
