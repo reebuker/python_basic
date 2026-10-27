@@ -1,1 +1,1 @@
-Version from master branch
+omd.py - домашка номер 7, по Основам Языка
