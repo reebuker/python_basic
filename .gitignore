@@ -1,0 +1,5 @@
+# swap файлы neovim
+*.swp
+
+# jupyter блокноты
+*.ipynb
