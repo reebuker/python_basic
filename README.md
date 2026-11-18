@@ -11,7 +11,8 @@
 
 ## Домашка по функциям:
 Запуск: 
-`python3 functions_homework/homework.py`
+`git checkout functions_homework`
+`cd functions_homework & python3 homework.py 1`
 
 ### Для себя:
 Используй flake8 для проверки соблюдения pep8
