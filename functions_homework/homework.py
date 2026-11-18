@@ -24,7 +24,6 @@ int - номер варианта. остальные параметры - по 
 
 import csv
 import sys
-from collections.abc import Iterator
 from itertools import groupby
 
 
@@ -52,7 +51,7 @@ def read_file(filename: str) -> list[dict]:
     return data
 
 
-def group_by(data: list[dict], key: str) -> indexerator:
+def group_by(data: list[dict], key: str):
     data = sorted(data, key=lambda x: x[key])
     return groupby(data, key=lambda x: x[key])
 
