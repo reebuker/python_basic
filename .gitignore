@@ -1,0 +1,14 @@
+# swap файлы neovim
+*.swp
+
+# jupyter блокноты
+*.ipynb
+
+# выходной файл 
+report.csv
+
+# venv 
+.venv/
+
+# __pycache__
+--pycache__/
