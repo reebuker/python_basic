@@ -84,7 +84,7 @@ class CountVectorizer:
             raise RuntimeError("Словарь пуст")
 
         # основная функция
-        words_in_docs_cnt = []
+        doc_words_count = []
         for doc in docs:
             counts = []
             tokens = self.tokenize(doc)
@@ -92,9 +92,9 @@ class CountVectorizer:
             for feature in self.get_feature_names():
                 counts.append(tokens.count(feature))
 
-            words_in_docs_cnt.append(counts)
+            doc_words_count.append(counts)
 
-        return words_in_docs_cnt
+        return doc_words_count
 
     def fit_transform(self, docs: list[str]) -> list[list[int]]:
         self.fit(docs)
@@ -139,7 +139,6 @@ class TfidfVectorizer(CountVectorizer):
     ):
         super().__init__(lowercase=lowercase, ngram_size=ngram_size)
         self._idf = DEFAULT_IDF
-        self.lowercase = lowercase
         self.use_idf = use_idf
 
     def get_idf(self, vectors) -> np.ndarray:
@@ -166,17 +165,17 @@ class TfidfVectorizer(CountVectorizer):
         return self
 
     def transform(self, test_texts: list[str]) -> list[list[float]]:
-        words_in_docs_cnt = super().transform(test_texts)
+        doc_words_count = super().transform(test_texts)
         tokenized_docs = [self.tokenize(doc) for doc in test_texts]
 
         # Tf = кол-во вхождений слова t в документ / кол-во слов в документе
         vecs = []
-        for doc in range(len(words_in_docs_cnt)):
+        for doc in range(len(doc_words_count)):
             # clean_doc - только известные слова
             clean_doc = [w for w in tokenized_docs[doc] if w in self._vocabulary]
 
             if clean_doc:
-                vecs.append(np.array(words_in_docs_cnt[doc]) / len(clean_doc))
+                vecs.append(np.array(doc_words_count[doc]) / len(clean_doc))
             else:
                 vecs.append(np.zeros(len(self._vocabulary)))
 
