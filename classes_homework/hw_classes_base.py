@@ -274,10 +274,17 @@ def demo():
     print(tfidf_vec.get_feature_names())
 
     print("Idf:")
-    print(tfidf_vec.idf)
+    idf_from_vec = tfidf_vec.idf
+    print(idf_from_vec)
 
     print("Tf:")
     print(matrix)
+
+    print("Очищаем переменную, где храним полученный idf:")
+    print(idf_from_vec.clear())
+
+    print("Снова получаем idf:")
+    print(tfidf_vec.idf)
     print()
 
     # Сценарий 2
