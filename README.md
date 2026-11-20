@@ -3,15 +3,19 @@
 Леднев Роман Станиславович, DS
 
 ## Требования
-- Python 3.14 
-- Внешних зависимостей нет, только стандартная библиотека
+- Python 3.12.3 
+- numpy
 
 ## Структура
 - `seminar_*` - файлы с заданиями с семинаров 
 
 ## Домашка по классам:
 Запуск: 
-`python3 functions_homework/homework.py`
+`# если numpy не установлен`
+`source venv/bin/activate`
+`pip install numpy`
+
+`python3 functions_homework/hw_classes_base.py`
 
 ### Для себя:
 Используй flake8 для проверки соблюдения pep8

@@ -9,6 +9,8 @@ report.csv
 
 # venv 
 .venv/
+aa_python/
+
 
 # __pycache__
 --pycache__/
